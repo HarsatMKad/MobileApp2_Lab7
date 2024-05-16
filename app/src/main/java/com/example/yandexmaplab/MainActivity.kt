@@ -40,6 +40,21 @@ private lateinit var mapView: MapView
 class MainActivity : AppCompatActivity() {
     private lateinit var mapObjectCollection: MapObjectCollection
     lateinit var userLocationLayer: UserLocationLayer
+
+    fun createMark(point: Point ) {
+        mapObjectCollection.addPlacemark(point)
+    }
+
+    val listener = object : InputListener {
+        override fun onMapTap(p0: Map, p1: Point) {
+            createMark(p1)
+        }
+
+        override fun onMapLongTap(p0: Map, p1: Point) {
+            createMark(p1)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -76,21 +91,6 @@ class MainActivity : AppCompatActivity() {
         userLocationLayer.isVisible = true
 
         mapObjectCollection = mapView.map.mapObjects.addCollection()
-
-        fun createMark(point: Point ) {
-            mapObjectCollection.addPlacemark(point)
-        }
-
-        val listener = object : InputListener {
-            override fun onMapTap(p0: Map, p1: Point) {
-                createMark(p1)
-            }
-
-            override fun onMapLongTap(p0: Map, p1: Point) {
-                createMark(p1)
-            }
-        }
-
         mapView.map.addInputListener(listener)
     }
 
